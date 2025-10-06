@@ -1,5 +1,5 @@
-import connectDB from "@/db/dbConnect";
-import User from "@/models/userModel";
+import { connectDB } from "@/db/dbConnect";
+import { User } from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/utils/mailer";
@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
     try {
         const { username, email, password } = await request.json();
         console.log(username, email, password);
-
         // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -30,7 +29,7 @@ export async function POST(request: NextRequest) {
 
         // send verification email 
 
-        await sendEmail({email: "sonu@gmail.com", emailType: "VERIFY", userId: savedUser._id});
+        await sendEmail({email, emailType: "VERIFY", userId: savedUser._id});
 
         return NextResponse.json({
             message: "User registered successfully",
@@ -40,6 +39,12 @@ export async function POST(request: NextRequest) {
             { status: 201 }
         );     
     } catch (error: any) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
+        console.log("error occured", error);
+        
+        return NextResponse.json({ 
+            message: "Error registering user",
+            success: false,
+            error: error
+        }, { status: 500 });
     }
 }

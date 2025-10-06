@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 import bcryptjs from 'bcryptjs';
-import User from '@/models/userModel';
-
+import { User } from '@/models/userModel';
 
 export const sendEmail = async ({email, emailType, userId}: any) => {
     try {
@@ -24,8 +23,8 @@ export const sendEmail = async ({email, emailType, userId}: any) => {
         host: "sandbox.smtp.mailtrap.io",
         port: 2525,
         auth: {
-            user: "6a2e2fa7b49d2b",
-            pass: "****f7d4"
+            user: "d1f8f0742e67f1",
+            pass: "84b248df45d876"
         }
         });
 
@@ -42,6 +41,7 @@ export const sendEmail = async ({email, emailType, userId}: any) => {
 
         return info;
     } catch (error: any) {
+        console.log(error);
         throw new Error(error.message);
     }
 };

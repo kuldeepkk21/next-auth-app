@@ -1,6 +1,4 @@
-import { verify } from "crypto";
 import mongoose from "mongoose";
-import { unique } from "next/dist/build/utils";
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -33,4 +31,4 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.models.users || mongoose.model("users", userSchema);
 
-export default User;
+export { User };
